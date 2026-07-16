@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>전화 메모</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h1>전화 메모</h1>
+        <button type="button" id="new-note-btn" class="btn btn-primary">새 통화</button>
+      </div>
+      <div class="search-box">
+        <input
+          type="search"
+          id="search-input"
+          placeholder="키워드 또는 전화번호 검색"
+          autocomplete="off"
+          spellcheck="false"
+        >
+      </div>
+      <ul id="note-list" class="note-list"></ul>
+    </aside>
+
+    <main class="editor-panel">
+      <div class="editor-toolbar">
+        <span id="note-date" class="note-date"></span>
+        <button type="button" id="delete-note-btn" class="btn btn-danger">삭제</button>
+      </div>
+      <textarea
+        id="editor"
+        placeholder="통화 내용을 입력하세요..."
+        spellcheck="false"
+      ></textarea>
+      <div class="status-bar">
+        <span id="save-status" class="save-status">저장됨</span>
+      </div>
+    </main>
+  </div>
+
+  <div id="context-menu" class="context-menu hidden">
+    <button type="button" id="context-delete-btn">삭제</button>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,260 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
+  background: #f0f2f5;
+  color: #1a1a2e;
+}
+
+.app {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 260px;
+  min-width: 200px;
+  background: #1a1a2e;
+  color: #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.sidebar-header {
+  padding: 20px 16px 12px;
+  border-bottom: 1px solid #2d2d44;
+}
+
+.sidebar-header h1 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.search-box {
+  padding: 8px 12px;
+  border-bottom: 1px solid #2d2d44;
+}
+
+#search-input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #2d2d44;
+  border-radius: 6px;
+  background: #2d2d44;
+  color: #e0e0e0;
+  font-size: 0.875rem;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+#search-input::placeholder {
+  color: #777;
+}
+
+#search-input:focus {
+  border-color: #4a6cf7;
+}
+
+#search-input::-webkit-search-cancel-button {
+  cursor: pointer;
+}
+
+.note-list-empty {
+  padding: 16px 12px;
+  font-size: 0.875rem;
+  color: #777;
+  text-align: center;
+}
+
+.note-list {
+  list-style: none;
+  overflow-y: auto;
+  flex: 1;
+  padding: 8px;
+}
+
+.note-item {
+  padding: 10px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  transition: background 0.15s;
+  margin-bottom: 2px;
+}
+
+.note-item:hover {
+  background: #2d2d44;
+}
+
+.note-item.active {
+  background: #3d3d5c;
+  color: #fff;
+}
+
+.note-item-preview {
+  color: #9999aa;
+  font-size: 0.8rem;
+  margin-top: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.note-item.active .note-item-preview {
+  color: #bbb;
+}
+
+.editor-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 20px;
+  min-width: 0;
+}
+
+.editor-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.note-date {
+  font-size: 0.875rem;
+  color: #666;
+}
+
+#editor {
+  flex: 1;
+  width: 100%;
+  border: 1px solid #d0d4dc;
+  border-radius: 8px;
+  padding: 16px;
+  font-size: 1rem;
+  line-height: 1.6;
+  resize: none;
+  outline: none;
+  font-family: inherit;
+  background: #fff;
+  transition: border-color 0.15s;
+}
+
+#editor:focus {
+  border-color: #4a6cf7;
+  box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.15);
+}
+
+.status-bar {
+  margin-top: 8px;
+  text-align: right;
+}
+
+.save-status {
+  font-size: 0.8rem;
+  color: #888;
+  transition: color 0.3s;
+}
+
+.save-status.saving {
+  color: #4a6cf7;
+}
+
+.save-status.saved {
+  color: #2e9e5b;
+}
+
+.btn {
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, opacity 0.15s;
+}
+
+.btn-primary {
+  background: #4a6cf7;
+  color: #fff;
+  width: 100%;
+}
+
+.btn-primary:hover {
+  background: #3a5ce5;
+}
+
+.btn-danger {
+  background: transparent;
+  color: #e05252;
+  border: 1px solid #e05252;
+}
+
+.btn-danger:hover {
+  background: #fef0f0;
+}
+
+.btn-danger:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.context-menu {
+  position: fixed;
+  background: #fff;
+  border: 1px solid #d0d4dc;
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  min-width: 100px;
+  overflow: hidden;
+}
+
+.context-menu.hidden {
+  display: none;
+}
+
+.context-menu button {
+  display: block;
+  width: 100%;
+  padding: 8px 16px;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: #e05252;
+}
+
+.context-menu button:hover:not(:disabled) {
+  background: #fef0f0;
+}
+
+.context-menu button:disabled {
+  color: #aaa;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .app {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    max-height: 200px;
+  }
+}
