@@ -15,6 +15,13 @@ const searchInputEl = document.getElementById("search-input");
 const exportBtn = document.getElementById("export-btn");
 const importBtn = document.getElementById("import-btn");
 const importFileInput = document.getElementById("import-file-input");
+const themeToggleBtn = document.getElementById("theme-toggle-btn");
+const fontDecreaseBtn = document.getElementById("font-decrease-btn");
+const fontIncreaseBtn = document.getElementById("font-increase-btn");
+const fontSizeValueEl = document.getElementById("font-size-value");
+const sidebarEl = document.getElementById("note-sidebar");
+const sidebarToggleBtn = document.getElementById("sidebar-toggle-btn");
+const sidebarBackdropEl = document.getElementById("sidebar-backdrop");
 
 // 우클릭 메뉴, 저장 가능 여부, 지연 저장 상태를 관리합니다.
 let contextMenuTargetId = null;

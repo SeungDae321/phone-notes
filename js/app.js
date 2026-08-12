@@ -1,5 +1,7 @@
 // 앱 상태와 첫 화면을 준비하고 모든 사용자 동작에 대한 이벤트를 연결합니다.
 function init() {
+  initializePreferences();
+  initializeMobileNavigation();
   const initializationMessage = initializeNotes();
 
   if (notes.length === 0) notes.push(createNoteObject());
@@ -25,6 +27,11 @@ function init() {
   importFileInput.addEventListener("change", () =>
     importNotes(importFileInput.files[0])
   );
+  themeToggleBtn.addEventListener("click", toggleTheme);
+  fontDecreaseBtn.addEventListener("click", decreaseEditorFontSize);
+  fontIncreaseBtn.addEventListener("click", increaseEditorFontSize);
+  sidebarToggleBtn.addEventListener("click", toggleMobileSidebar);
+  sidebarBackdropEl.addEventListener("click", closeMobileSidebar);
 
   contextDeleteBtn.addEventListener("click", () => {
     if (contextMenuTargetId) {
@@ -38,13 +45,16 @@ function init() {
   document.addEventListener("keydown", (event) => {
     if (event.key !== "Escape") return;
 
-    if (!contextMenuEl.classList.contains("hidden")) {
+    if (isMobileSidebarOpen()) {
+      closeMobileSidebar();
+    } else if (!contextMenuEl.classList.contains("hidden")) {
       hideContextMenu();
     } else if (searchInputEl.value) {
       searchInputEl.value = "";
       handleSearchInput();
     }
   });
+  window.addEventListener("resize", handleNavigationViewportChange);
   window.addEventListener("beforeunload", commitPendingSave);
 }
 

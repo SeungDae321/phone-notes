@@ -10,6 +10,8 @@ const storageSource = fs.readFileSync(
 );
 const appSources = [
   "state.js",
+  "navigation.js",
+  "preferences.js",
   "search.js",
   "ui.js",
   "notes.js",
@@ -21,6 +23,7 @@ const appSources = [
 
 function createElement() {
   const classes = new Set();
+  const attributes = new Map();
   return {
     value: "",
     textContent: "",
@@ -28,7 +31,12 @@ function createElement() {
     disabled: false,
     files: [],
     dataset: {},
-    style: {},
+    style: {
+      setProperty(name, value) {
+        this[name] = value;
+      },
+    },
+    attributes,
     children: [],
     classList: {
       add: (...names) => names.forEach((name) => classes.add(name)),
@@ -40,7 +48,9 @@ function createElement() {
       return child;
     },
     addEventListener() {},
-    setAttribute() {},
+    setAttribute(name, value) {
+      attributes.set(name, String(value));
+    },
     focus() {},
     click() {},
     remove() {},
@@ -65,6 +75,13 @@ function createAppContext() {
       "export-btn",
       "import-btn",
       "import-file-input",
+      "theme-toggle-btn",
+      "font-decrease-btn",
+      "font-increase-btn",
+      "font-size-value",
+      "note-sidebar",
+      "sidebar-toggle-btn",
+      "sidebar-backdrop",
     ].map((id) => [id, createElement()])
   );
   elements.get("context-menu").classList.add("hidden");
@@ -79,6 +96,7 @@ function createAppContext() {
     createElement,
     addEventListener() {},
     body: createElement(),
+    documentElement: createElement(),
   };
   const context = vm.createContext({
     console,
@@ -95,6 +113,7 @@ function createAppContext() {
       innerWidth: 1920,
       innerHeight: 1080,
       addEventListener() {},
+      matchMedia: () => ({ matches: true }),
     },
     setTimeout: () => 1,
     clearTimeout() {},
@@ -172,4 +191,43 @@ test("검색 결과에서 활성 메모와 편집기를 함께 전환한다", ()
 
   assert.equal(vm.runInContext("activeNoteId", context), "b");
   assert.equal(elements.get("editor").value, "베타 고객");
+});
+
+test("시스템 테마와 입력 폰트 크기를 적용하고 사용자 선택을 저장한다", () => {
+  const { context, elements, values } = createAppContext();
+
+  context.initializePreferences();
+  assert.equal(context.document.documentElement.dataset.theme, "dark");
+  assert.equal(elements.get("font-size-value").textContent, "16px");
+
+  context.toggleTheme();
+  context.increaseEditorFontSize();
+
+  assert.equal(context.document.documentElement.dataset.theme, "light");
+  assert.equal(values.get("callNotesTheme"), "light");
+  assert.equal(values.get("callNotesFontSize"), "18");
+  assert.equal(
+    context.document.documentElement.style["--editor-font-size"],
+    "18px"
+  );
+});
+
+test("모바일 메모 서랍을 열고 메모 선택 후 닫는다", () => {
+  const { context, elements } = createAppContext();
+  const sidebar = elements.get("note-sidebar");
+  const toggle = elements.get("sidebar-toggle-btn");
+  const backdrop = elements.get("sidebar-backdrop");
+
+  context.init();
+  assert.equal(sidebar.attributes.get("aria-hidden"), "true");
+
+  context.toggleMobileSidebar();
+  assert.equal(context.document.body.classList.contains("sidebar-open"), true);
+  assert.equal(toggle.attributes.get("aria-expanded"), "true");
+  assert.equal(sidebar.attributes.get("aria-hidden"), "false");
+  assert.equal(backdrop.attributes.get("aria-hidden"), "false");
+
+  context.selectNote(vm.runInContext("activeNoteId", context));
+  assert.equal(context.document.body.classList.contains("sidebar-open"), false);
+  assert.equal(toggle.attributes.get("aria-expanded"), "false");
 });

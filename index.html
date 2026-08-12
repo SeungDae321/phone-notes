@@ -8,7 +8,7 @@
 </head>
 <body>
   <div class="app">
-    <aside class="sidebar">
+    <aside id="note-sidebar" class="sidebar" aria-label="메모 목록">
       <div class="sidebar-header">
         <h1>전화 메모</h1>
         <button type="button" id="new-note-btn" class="btn btn-primary">새 통화</button>
@@ -30,11 +30,53 @@
       </div>
       <ul id="note-list" class="note-list" role="listbox" aria-label="전화 메모 목록"></ul>
     </aside>
+    <button
+      type="button"
+      id="sidebar-backdrop"
+      class="sidebar-backdrop"
+      aria-label="메모 목록 닫기"
+      aria-hidden="true"
+      tabindex="-1"
+    ></button>
 
     <main class="editor-panel">
       <div class="editor-toolbar">
-        <span id="note-date" class="note-date"></span>
-        <button type="button" id="delete-note-btn" class="btn btn-danger">삭제</button>
+        <div class="editor-heading">
+          <button
+            type="button"
+            id="sidebar-toggle-btn"
+            class="btn sidebar-toggle"
+            aria-label="메모 목록 열기"
+            aria-controls="note-sidebar"
+            aria-expanded="false"
+          >☰</button>
+          <span id="note-date" class="note-date"></span>
+        </div>
+        <div class="editor-actions">
+          <button
+            type="button"
+            id="theme-toggle-btn"
+            class="btn btn-settings"
+            aria-label="다크 모드로 전환"
+            aria-pressed="false"
+          >다크 모드</button>
+          <div class="font-controls" role="group" aria-label="입력 글자 크기">
+            <button
+              type="button"
+              id="font-decrease-btn"
+              class="btn btn-settings"
+              aria-label="입력 글자 작게"
+            >−</button>
+            <output id="font-size-value" aria-live="polite">16px</output>
+            <button
+              type="button"
+              id="font-increase-btn"
+              class="btn btn-settings"
+              aria-label="입력 글자 크게"
+            >+</button>
+          </div>
+          <button type="button" id="delete-note-btn" class="btn btn-danger">삭제</button>
+        </div>
       </div>
       <label for="editor" class="visually-hidden">통화 내용</label>
       <textarea
@@ -54,6 +96,8 @@
 
   <script src="js/storage.js"></script>
   <script src="js/state.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/preferences.js"></script>
   <script src="js/search.js"></script>
   <script src="js/ui.js"></script>
   <script src="js/notes.js"></script>

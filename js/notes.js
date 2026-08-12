@@ -26,6 +26,7 @@ function selectNote(id) {
   activeNoteId = id;
   renderNoteList();
   updateEditorUI();
+  closeMobileSidebar(false);
   editorEl.focus();
 }
 
