@@ -14,6 +14,7 @@
         <button type="button" id="new-note-btn" class="btn btn-primary">새 통화</button>
       </div>
       <div class="search-box">
+        <label for="search-input" class="visually-hidden">메모 검색</label>
         <input
           type="search"
           id="search-input"
@@ -22,7 +23,12 @@
           spellcheck="false"
         >
       </div>
-      <ul id="note-list" class="note-list"></ul>
+      <div class="backup-actions">
+        <button type="button" id="export-btn" class="btn btn-secondary">내보내기</button>
+        <button type="button" id="import-btn" class="btn btn-secondary">가져오기</button>
+        <input type="file" id="import-file-input" accept="application/json,.json" hidden>
+      </div>
+      <ul id="note-list" class="note-list" role="listbox" aria-label="전화 메모 목록"></ul>
     </aside>
 
     <main class="editor-panel">
@@ -30,18 +36,19 @@
         <span id="note-date" class="note-date"></span>
         <button type="button" id="delete-note-btn" class="btn btn-danger">삭제</button>
       </div>
+      <label for="editor" class="visually-hidden">통화 내용</label>
       <textarea
         id="editor"
         placeholder="통화 내용을 입력하세요..."
         spellcheck="false"
       ></textarea>
       <div class="status-bar">
-        <span id="save-status" class="save-status">저장됨</span>
+        <span id="save-status" class="save-status" role="status" aria-live="polite">저장됨</span>
       </div>
     </main>
   </div>
 
-  <div id="context-menu" class="context-menu hidden">
+  <div id="context-menu" class="context-menu hidden" role="menu">
     <button type="button" id="context-delete-btn">삭제</button>
   </div>
 
