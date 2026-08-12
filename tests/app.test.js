@@ -8,9 +8,15 @@ const storageSource = fs.readFileSync(
   path.join(__dirname, "..", "js", "storage.js"),
   "utf8"
 );
-const appSource = fs.readFileSync(
-  path.join(__dirname, "..", "js", "app.js"),
-  "utf8"
+const appSources = [
+  "state.js",
+  "search.js",
+  "ui.js",
+  "notes.js",
+  "backup.js",
+  "app.js",
+].map((fileName) =>
+  fs.readFileSync(path.join(__dirname, "..", "js", fileName), "utf8")
 );
 
 function createElement() {
@@ -105,7 +111,7 @@ function createAppContext() {
   });
 
   vm.runInContext(storageSource, context);
-  vm.runInContext(appSource, context);
+  appSources.forEach((source) => vm.runInContext(source, context));
   return { context, elements, values };
 }
 
